@@ -160,7 +160,7 @@ function makeBox(){
   }
   else {
     response1 = "This website occupies "
-    response1_2 = " territory. (" + city + ", " + region + ")"
+    response1_2 = " land. (" + city + ", " + region + ")"
     responseNode1 = document.createTextNode(response1)
     responseNode1_2 = document.createTextNode(response1_2)
     newDiv2.appendChild(responseNode1)
