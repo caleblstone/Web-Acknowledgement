@@ -36,7 +36,7 @@ function one() {
   var url2 = url.split("/")
   var urlFin = url2[2]
   var ip = "134.201.250.155";
-  var api_key = "at_TRRchhd42ohdYhBwd5qs5R8BiZPNS";
+  // var api_key = "at_TRRchhd42ohdYhBwd5qs5R8BiZPNS";
 
 
   $(function () {
@@ -80,7 +80,7 @@ function dothething() {
 
 
 function makeBox(){
-  
+
   console.log(names);
   const newDiv = document.createElement("div");
   const newDiv2 = document.createElement("div");
