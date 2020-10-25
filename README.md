@@ -1,2 +1,3 @@
-# project-2
-The starting point for some browser extension experiments
+# Web Acknowledgement
+
+A browser extension that performs a land acknowledgement based on where a website is stored physically.
