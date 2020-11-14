@@ -1,6 +1,3 @@
-
-
-
 (function($) {
 
 })(jQuery);
@@ -12,11 +9,34 @@
 
 var url
 
+var stopper = true;
+
+
 (function() {
-    chrome.runtime.onMessage.addListener(function(message) {
-        url = message.parameter.url;
-        one()
+  chrome.runtime.onMessage.addListener(function(message) {
+    url = message.parameter.url;
+    var map = {
+      87: false,
+      65: false
+    };
+    $(document).keydown(function(e) {
+      if (e.keyCode in map) {
+        map[e.keyCode] = true;
+        if (map[87] && map[65]) {
+          // FIRE EVENT
+          if (stopper == true) {
+            one()
+            stopper = false
+          }
+        }
+      }
+    }).keyup(function(e) {
+      if (e.keyCode in map) {
+        map[e.keyCode] = false;
+      }
     });
+
+  });
 })();
 
 
@@ -37,49 +57,54 @@ function one() {
   var urlFin = url2[2]
   var ip = "134.201.250.155";
   // var api_key = "at_TRRchhd42ohdYhBwd5qs5R8BiZPNS";
+  chrome.storage.sync.get(['apiKey'], function(items){
+    api_key = items.apiKey
+});
 
-
-  $(function () {
-     $.ajax({
-         url: "https://geo.ipify.org/api/v1",
-         data: {apiKey: api_key, domain:urlFin},
-         success: function(data) {
-             //$("body").append("<pre>"+ JSON.stringify(data,"",2)+"</pre>");
-             console.log(data.location.lat, data.location.lng);
-             lat = data.location.lat
-             lng = data.location.lng
-             city = data.location.city
-             region = data.location.region
-             country = data.location.country
-             console.log(data.location.city);
-             dothething()
-         }
-     });
+  $(function() {
+    $.ajax({
+      url: "https://geo.ipify.org/api/v1",
+      data: {
+        apiKey: api_key,
+        domain: urlFin
+      },
+      success: function(data) {
+        //$("body").append("<pre>"+ JSON.stringify(data,"",2)+"</pre>");
+        console.log(data.location.lat, data.location.lng);
+        lat = data.location.lat
+        lng = data.location.lng
+        city = data.location.city
+        region = data.location.region
+        country = data.location.country
+        console.log(data.location.city);
+        go()
+      }
+    });
 
   });
 }
 
 
-function dothething() {
+function go() {
   let nativeURL = 'https://native-land.ca/api/index.php?maps=languages&position=' + lat + "," + lng
   console.log(nativeURL);
   fetch(nativeURL)
-  .then(response => response.json())
-  .then(data => obj = data)
-  // .then(() => console.log(obj))
-  .then(data => {
-    for(var i = 0; i<= data.length - 1; i++){
+    .then(response => response.json())
+    .then(data => obj = data)
+    // .then(() => console.log(obj))
+    .then(data => {
+      for (var i = 0; i <= data.length - 1; i++) {
         places.push(data[i])
         properties[i] = places[i]
-        names[i]=properties[i].properties.Name
-        slug[i]=properties[i].properties.Slug
-     }
-   })
-  .then(data => makeBox());
+        names[i] = properties[i].properties.Name
+        slug[i] = properties[i].properties.Slug
+      }
+    })
+    .then(data => makeBox());
 }
 
 
-function makeBox(){
+function makeBox() {
 
   console.log(names);
   const newDiv = document.createElement("div");
@@ -141,11 +166,10 @@ function makeBox(){
   let response = document.createElement('p');
 
   if (names < 1) {
-    response1 = "This website occupies land not indexed by "
+    response1 = "This website occupies land that hasn't been indexed by "
     if (country == "US") {
       response1_2 = " " + "(" + city + ", " + region + ")"
-    }
-    else {
+    } else {
       response1_2 = " " + "(" + city + ", " + country + ")"
     }
     native_land = document.createElement('a')
@@ -157,8 +181,7 @@ function makeBox(){
     newDiv2.appendChild(responseNode1);
     newDiv2.appendChild(native_land);
     newDiv2.appendChild(responseNode1_2);
-  }
-  else {
+  } else {
     response1 = "This website occupies "
     response1_2 = " land. (" + city + ", " + region + ")"
     responseNode1 = document.createTextNode(response1)
@@ -172,8 +195,7 @@ function makeBox(){
           newDiv2.appendChild(and)
         }
       }
-    }
-    else {
+    } else {
       newDiv2.appendChild(link[0])
     }
     newDiv2.appendChild(responseNode1_2)
@@ -202,9 +224,10 @@ function makeBox(){
   document.body.insertBefore(newDiv3, currentDiv);
   document.body.insertBefore(newDiv, currentDiv);
 
-  button.addEventListener("click", function(){
+  button.addEventListener("click", function() {
     newDiv.style.display = "none"
     newDiv2.style.display = "none"
     newDiv3.style.display = "none"
+    stopper = true
   })
 }

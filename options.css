@@ -1,0 +1,85 @@
+body{
+  font-size: 4vw;
+  font-family: Arial;
+  background-color: black;
+  color: white;
+  line-height: 1.3;
+}
+
+div.boundingBox{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+div.title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 4px solid white;
+  padding-top: 2vw;
+  padding-bottom: 1vw;
+  padding-left: 5vw;
+  padding-right: 5vw;
+  margin-bottom: 2vw;
+  width: 60%;
+}
+div.content{
+  border: 4px solid white;
+  width: 60%;
+  padding: 5vw;
+  margin-bottom: 2vw;
+}
+
+header{
+  margin-bottom: 2vw;
+  text-decoration: underline;
+}
+
+div.number{
+  display: flex;
+  flex-direction: column;
+  margin-right: 1vw;
+}
+div.num{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid white;
+  border-radius: 3vw;
+}
+
+div.steps{
+  display: grid;
+  grid-template-columns: 1fr 8fr;
+  grid-row-gap: 1vw;
+}
+
+div.inputButton{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+input{
+  width: auto;
+  font-size: 4vw;
+  font-family: Arial;
+  border: none;
+  border-radius: 0;
+}
+button{
+  border: 2px solid white;
+  font-size: 2vw;
+  font-family: Arial;
+  background-color: black;
+  color: white;
+  padding-left: 1vw;
+  padding-right: 1vw;
+}
+button:hover{
+  cursor: pointer;
+  background-color: blue;
+}

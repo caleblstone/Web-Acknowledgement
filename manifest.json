@@ -1,6 +1,12 @@
 {
   "manifest_version": 2,
   "name": "Web Acknowledgement",
+  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+
   "description": "A Chrome extension that performs a land acknowledgement based on where the website is stored physically",
   "version": "1.0",
   "background": {
@@ -25,6 +31,7 @@
 
   },
   "permissions": [
-    "tabs"
+    "tabs",
+    "storage"
   ]
 }
